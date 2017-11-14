@@ -1,15 +1,17 @@
+package expression;
 
-public class LBool implements Literal,Expression{
-	private Boolean bool;
+public class LInt implements Literal{
+	private Integer x;
 	
-	public LBool(Boolean bool) {
+	public LInt(int x) {
 		// TODO Auto-generated constructor stub
-		this.bool = bool;
+		this.x=x;
 	}
+	
 	@Override
 	public String getType() {
 		// TODO Auto-generated method stub
-		return bool.getClass().toString();
+		return x.getClass().toString();
 	}
 
 	@Override
@@ -17,5 +19,5 @@ public class LBool implements Literal,Expression{
 		// TODO Auto-generated method stub
 		return this.getType();
 	}
-	
+
 }
