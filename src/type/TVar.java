@@ -4,8 +4,15 @@ public class TVar implements Type{
 	String name;
 	
 	public TVar(String name) {
-		// TODO Auto-generated constructor stub
 		this.name=name;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof TVar) {
+			return this.name.equals(((TVar)obj).name);
+		}
+		return false;
 	}
 	
 }

@@ -1,23 +1,14 @@
 package expression;
 
-public class LInt implements Literal{
-	private Integer x;
-	
-	public LInt(int x) {
-		// TODO Auto-generated constructor stub
-		this.x=x;
-	}
-	
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return x.getClass().toString();
-	}
+import type.TCon;
 
-	@Override
-	public String infer() {
-		// TODO Auto-generated method stub
-		return this.getType();
+public class LInt implements Lit{
+	Integer value;
+	public LInt(int i) {
+		this.value=i;
 	}
-
+	@Override
+	public TCon getType() {
+		return new TCon("Int");
+	}
 }

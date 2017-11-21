@@ -1,21 +1,16 @@
 package expression;
 
-public class LBool implements Literal{
-	private Boolean bool;
-	
-	public LBool(Boolean bool) {
-		// TODO Auto-generated constructor stub
+import type.TCon;
+
+public class LBool implements Lit {
+	boolean bool;
+
+	public LBool(boolean bool) {
 		this.bool = bool;
-	}
-	@Override
-	public String getType() {
-		// TODO Auto-generated method stub
-		return bool.getClass().toString();
 	}
 
 	@Override
-	public String infer() {
-		// TODO Auto-generated method stub
-		return this.getType();
+	public TCon getType() {
+		return new TCon("Bool");
 	}
 }

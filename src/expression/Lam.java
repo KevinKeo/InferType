@@ -1,12 +1,10 @@
 package expression;
 
-public class Lam implements Expression{
-	private Var x;
-	private Expression e;
-	
-	@Override
-	public String infer() {
-		// TODO Auto-generated method stub
-		return null;
+public class Lam implements Expr{
+	String name;
+	Expr e;
+	public Lam(String name, Expr e) {
+		this.name=name;
+		this.e=e;
 	}
 }
