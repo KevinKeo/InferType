@@ -14,5 +14,4 @@ public class TVar implements Type{
 		}
 		return false;
 	}
-	
 }
