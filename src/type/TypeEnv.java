@@ -1,5 +1,6 @@
 package type;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,5 +25,11 @@ public class TypeEnv {
 	public Map<Var, Scheme> getEnv(){
 		return this.env;
 	}
-	
+	 public TypeEnv combine(TypeEnv typeEnv) {
+	        Map<Var, Scheme> newEnv = new HashMap<>();
+	        newEnv.putAll(typeEnv.env);
+	        (env.keySet()).forEach(newEnv::remove);
+	        env.putAll(newEnv);
+	        return this;
+	}
 }
