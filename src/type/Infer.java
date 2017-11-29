@@ -23,7 +23,7 @@ public class Infer {
 	}
 	
 	public Infer inEnv(Var var,Scheme scheme) {
-		Infer m = new Infer(this.env,this.constraints,this.inferState) ;
+		Infer m = new Infer(new TypeEnv().combine(env),this.constraints,this.inferState) ;
 		m.env.remove(var);
 		m.env.extend(var, scheme);
 		return m;
