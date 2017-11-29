@@ -14,4 +14,10 @@ public class TVar implements Type{
 		}
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "TVar("+name+")";
+	}
 }

@@ -8,4 +8,10 @@ public class TArr implements Type{
 		this.typeLeft=left;
 		this.typeRight=right;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return typeLeft.toString()+" -> "+typeRight.toString();
+	}
 }

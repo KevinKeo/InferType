@@ -10,10 +10,10 @@ import type.TVar;
 import type.Type;
 
 public class Lam implements Expr{
-	String name;
+	Var name;
 	Expr e;
 	
-	public Lam(String name, Expr e) {
+	public Lam(Var name, Expr e) {
 		this.name=name;
 		this.e=e;
 	}
@@ -24,5 +24,10 @@ public class Lam implements Expr{
 		Infer newInfer = infer.inEnv(name, new Scheme(tv,Collections.emptyList()));
 		Type t = e.infer(newInfer);
 		return new TArr(tv, t);
+	}
+	
+	@Override
+	public String toString() {
+		return "Lam(var:"+name.toString()+" expr:"+e.toString()+")";
 	}
 }

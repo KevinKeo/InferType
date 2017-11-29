@@ -21,4 +21,9 @@ public class App implements Expr{
 		infer.uni(t1, new TArr(t2, tv));
 		return tv ;
 	}
+	
+	@Override
+	public String toString() {
+		return "App(e1:"+e1.toString()+" e2:"+e2.toString()+")";
+	}
 }

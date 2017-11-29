@@ -12,5 +12,5 @@ public interface Type {
 		Substitutable.ftv(env).forEach(setT::remove);	
 		return new Scheme(this,new ArrayList<TVar>(setT));
 	}
-
+	
 }

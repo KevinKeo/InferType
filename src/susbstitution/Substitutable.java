@@ -1,7 +1,7 @@
 package susbstitution;
 
 import java.util.Collections;
-import java.util.Set;
+import java.util.HashSet;
 
 import type.Scheme;
 import type.TArr;
@@ -38,7 +38,7 @@ public class Substitutable {
 		return new TArr(apply(s,a.typeLeft), apply(s,a.typeRight)) ;
 	}
 		
-	public static Set<TVar> ftv(Type a){
+	public static HashSet<TVar> ftv(Type a){
 		if(a instanceof TCon)
 			return ftv((TCon)a);
 		if(a instanceof TVar) 
@@ -48,18 +48,18 @@ public class Substitutable {
 		return null ;
 	}
 	
-	public static Set<TVar> ftv(TCon a){
-		return Collections.emptySet();
+	public static HashSet<TVar> ftv(TCon a){
+		return new HashSet<TVar>();
 	}
 	
-	public static Set<TVar> ftv(TVar a){
-		return Collections.singleton(a);
+	public static HashSet<TVar> ftv(TVar a){
+		return new HashSet<TVar>(Collections.singleton(a));
 	}
 	
-	public static Set<TVar> ftv(TArr a){
-		 Set<TVar> r = ftv(a.typeLeft); 
-		 r.addAll(ftv(a.typeRight));
-		 return r ;
+	public static HashSet<TVar> ftv(TArr a){
+		HashSet<TVar> r = ftv(a.typeLeft); 
+		r.addAll(ftv(a.typeRight));
+		return r ;
 	}
 	
 	//------------------SCHEME
@@ -71,8 +71,8 @@ public class Substitutable {
 		return sc ;
 	}
 	
-	public static Set<TVar> ftv(Scheme sc){
-		Set<TVar> setT = ftv(sc.type);
+	public static HashSet<TVar> ftv(Scheme sc){
+		HashSet<TVar> setT = ftv(sc.type);
 		sc.as.forEach(setT::remove);
 		return setT ;
 	}
@@ -84,8 +84,8 @@ public class Substitutable {
 		return te ;
 	}
 	
-	public static Set<TVar> ftv(TypeEnv te){
-		Set<TVar> res = Collections.emptySet();
+	public static HashSet<TVar> ftv(TypeEnv te){
+		HashSet<TVar> res = new HashSet<>();
 		te.env.values().forEach(sc -> res.addAll(ftv(sc)));
 		return res ;
 	}

@@ -7,4 +7,12 @@ public class Constraint {
 		this.t1=t1;
 		this.t2=t2;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return t1.toString() +" - "+ t2.toString();
+	}
+	
+	
 }

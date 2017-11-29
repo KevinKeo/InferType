@@ -30,5 +30,9 @@ public class Scheme {
 		return Substitutable.apply(new Subst(map), this.type);
 	}
 	
+	@Override
+	public String toString() {
+		return "Scheme(type:"+type.toString()+" et ListTVar:"+as.toString()+")";
+	}
 
 }

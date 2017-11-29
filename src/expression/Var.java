@@ -29,4 +29,10 @@ public class Var implements Expr{
 		}
 		return false;
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Var("+name+")";
+	}
 }
