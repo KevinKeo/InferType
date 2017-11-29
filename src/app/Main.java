@@ -9,6 +9,9 @@ import expression.LInt;
 import expression.Lam;
 import expression.Let;
 import expression.Var;
+import solver.Solve;
+import solver.Unifier;
+import susbstitution.Subst;
 import type.Constraint;
 import type.Infer;
 import type.InferState;
@@ -62,5 +65,12 @@ public class Main {
 		Let let = new Let(f, l, superApp);
 
 		Type t = let.infer(infer);
+
+		Unifier u = new Unifier(new Subst(),infer.constraints);
+
+		Subst s = Solve.solver(u);
+
+		System.out.println(u.constraints);
+		System.out.println(u.subst.map);
 	}
 }

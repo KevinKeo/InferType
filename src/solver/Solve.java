@@ -9,6 +9,7 @@ import type.TVar;
 import type.Type;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 public class Solve {
 	
@@ -28,7 +29,9 @@ public class Solve {
 	public static Subst bind(TVar a, Type t){
         if (a == t) return new Subst();
         if (occursCheck(a,t)) throw new UnificationException("InfiniteType",a,t);
-        return new Subst(Collections.singletonMap(a,t));
+        HashMap<TVar,Type> map = new HashMap();
+        map.put(a,t);
+        return new Subst(map);
 	}
 
 	public static boolean occursCheck(TVar a, Type t){

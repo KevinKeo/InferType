@@ -25,7 +25,7 @@ public class Scheme {
 	    return $ apply s t
 	 */
 	public Type instantiate() {
-		Map<TVar,Type> map = new HashMap<>();
+		HashMap<TVar,Type> map = new HashMap<>();
 		this.as.forEach(tv -> map.put(tv,FreshName.fresh()));
 		return Substitutable.apply(new Subst(map), this.type);
 	}
