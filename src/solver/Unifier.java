@@ -12,6 +12,11 @@ public class Unifier {
 	
 	public Unifier() {
 		subst = new Subst();
-		constraints = new ArrayList<Constraint>();
+		constraints = new ArrayList<>();
+	}
+
+	public Unifier(Subst subst, List<Constraint> constraints){
+		this.subst = subst ;
+		this.constraints = constraints;
 	}
 }

@@ -2,13 +2,10 @@ package susbstitution;
 
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import type.Scheme;
-import type.TArr;
-import type.TCon;
-import type.TVar;
-import type.Type;
-import type.TypeEnv;
+import type.*;
 
 public class Substitutable {
 	
@@ -76,7 +73,23 @@ public class Substitutable {
 		sc.as.forEach(setT::remove);
 		return setT ;
 	}
-	
+
+	//-----------------[A]
+
+	/*public static <A> List<A> apply(Subst s, List<A> a){
+		return a.stream().map(m -> apply(s,m)).collect(Collectors.toList());
+	}*/
+
+	//-----------------Constraint
+	public static Constraint apply(Subst s, Constraint c){
+		return new Constraint(apply(s, c.t1), apply(s, c.t2));
+	}
+
+	public static List<Constraint> apply(Subst s, List<Constraint> c){
+		return c.stream().map(m -> apply(s,m)).collect(Collectors.toList());
+
+	}
+
 	//-----------------TYPEENV
 	
 	public static TypeEnv apply(Subst s, TypeEnv te) {

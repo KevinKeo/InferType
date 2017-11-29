@@ -60,9 +60,7 @@ public class Main {
 		App superApp = new App(new App(l2,a1),a2);
 		
 		Let let = new Let(f, l, superApp);
-		
+
 		Type t = let.infer(infer);
-		System.out.println(t);
-		
 	}
 }
