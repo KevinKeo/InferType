@@ -1,7 +1,8 @@
-package type;
+package inference;
 
-import susbstitution.Subst;
 import susbstitution.Substitutable;
+import type.TVar;
+import type.Type;
 
 import java.util.HashSet;
 

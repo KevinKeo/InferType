@@ -1,13 +1,11 @@
 package type;
 
 import exception.UnificationException;
-import solver.Solvable;
-import susbstitution.Subst;
+import inference.Subst;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Optional;
 
 public class TVar implements Type {
 	String name;

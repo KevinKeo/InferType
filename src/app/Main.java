@@ -8,10 +8,9 @@ import expression.LInt;
 import expression.Lam;
 import expression.Let;
 import expression.Var;
-import susbstitution.Subst;
-import type.Constraint;
-import type.Infer;
-import type.InferState;
+import inference.Constraint;
+import inference.Infer;
+import inference.InferState;
 import type.Type;
 import type.TypeEnv;
 

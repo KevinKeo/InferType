@@ -1,7 +1,7 @@
 package expression;
 
 import exception.UnboundVariableException;
-import type.Infer;
+import inference.Infer;
 import type.Type;
 
 public class Var implements Expr{

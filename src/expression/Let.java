@@ -1,6 +1,6 @@
 package expression;
 
-import type.Infer;
+import inference.Infer;
 import type.Scheme;
 import type.Type;
 

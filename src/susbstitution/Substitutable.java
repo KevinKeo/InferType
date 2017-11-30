@@ -1,5 +1,6 @@
 package susbstitution;
 
+import inference.Subst;
 import type.TVar;
 
 import java.util.HashSet;

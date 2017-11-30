@@ -1,6 +1,6 @@
 package type;
 
-import susbstitution.Subst;
+import inference.Subst;
 
 import java.util.HashSet;
 

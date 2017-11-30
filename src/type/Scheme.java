@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
-import susbstitution.Subst;
+import inference.Infer;
+import inference.Subst;
 import susbstitution.Substitutable;
 
 public class Scheme implements Substitutable<Scheme> {

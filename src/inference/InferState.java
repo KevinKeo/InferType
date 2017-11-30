@@ -1,4 +1,6 @@
-package type;
+package inference;
+
+import type.TVar;
 
 public class InferState {
 	int counter = -1;

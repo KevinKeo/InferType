@@ -1,12 +1,12 @@
-package type;
+package inference;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import expression.Expr;
 import expression.Var;
-import susbstitution.Subst;
 import susbstitution.Substitutable;
+import type.*;
 
 public class Infer {
 	public TypeEnv env;
@@ -29,7 +29,7 @@ public class Infer {
 		return this;
 	}
 	
-	public Infer inEnv(Var var,Scheme scheme) {
+	public Infer inEnv(Var var, Scheme scheme) {
 		Infer m = new Infer(new TypeEnv().combine(env),this.constraints,this.inferState) ;
 		m.env.remove(var);
 		m.env.extend(var, scheme);

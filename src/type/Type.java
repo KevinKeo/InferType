@@ -1,12 +1,11 @@
 package type;
 
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.Set;
 
 import exception.UnificationException;
-import solver.Solvable;
-import susbstitution.Subst;
+import susbstitution.Solvable;
+import inference.Subst;
 import susbstitution.Substitutable;
 
 public interface Type extends Substitutable<Type>, Solvable<Type> {

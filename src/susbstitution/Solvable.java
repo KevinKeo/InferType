@@ -1,8 +1,7 @@
-package solver;
-
-import susbstitution.Subst;
+package susbstitution;
 
 
+import inference.Subst;
 
 /**
  * Created by borsing on 30/11/17.

@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 import expression.Var;
-import susbstitution.Subst;
+import inference.Subst;
 import susbstitution.Substitutable;
 
 

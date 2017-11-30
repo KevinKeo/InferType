@@ -1,6 +1,6 @@
 package expression;
 
-import type.Infer;
+import inference.Infer;
 import type.TArr;
 import type.TVar;
 import type.Type;

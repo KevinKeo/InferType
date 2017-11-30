@@ -15,7 +15,7 @@ import expression.Let;
 import expression.Var;
 
 import org.junit.Assert;
-import type.Infer;
+import inference.Infer;
 import type.TArr;
 import type.TCon;
 import type.TVar;

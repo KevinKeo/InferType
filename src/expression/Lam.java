@@ -2,7 +2,7 @@ package expression;
 
 import java.util.Collections;
 
-import type.Infer;
+import inference.Infer;
 import type.Scheme;
 import type.TArr;
 import type.TVar;

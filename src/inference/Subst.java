@@ -1,7 +1,6 @@
-package susbstitution;
+package inference;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import type.TVar;
 import type.Type;
