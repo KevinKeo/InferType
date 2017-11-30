@@ -53,7 +53,7 @@ public class Main {
 		Var a = new Var("a");
 		Var b = new Var("b");
 		Lam l = new Lam(x, x);
-		Lam l2 = new Lam(a,new Lam(b,a));
+		Lam l2 = new Lam(a,new Lam(b,b));
 		
 		Var f = new Var("f");
 		App a1 = new App(f, new LBool(true));
