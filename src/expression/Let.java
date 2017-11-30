@@ -5,8 +5,8 @@ import type.Scheme;
 import type.Type;
 
 public class Let implements Expr {
-	Var name;
-	Expr e1, e2;
+	private Var name;
+	private Expr e1, e2;
 
 	public Let(Var name, Expr e1, Expr e2) {
 		this.name = name;
@@ -17,7 +17,7 @@ public class Let implements Expr {
 	@Override
 	public Type infer(Infer infer) {
 		Type t1 = e1.infer(infer);
-		Scheme sc = t1.generalize(infer.env);
+		Scheme sc = t1.generalize(infer.typeEnv());
 		Infer newInfer = infer.inEnv(name, sc);
 		Type t2 = e2.infer(newInfer);
 		return t2;

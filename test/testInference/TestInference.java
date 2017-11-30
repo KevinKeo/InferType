@@ -66,8 +66,8 @@ public class TestInference {
 		Type finalType = infer.infer(lamExp);
 
 		assertTrue(finalType instanceof TArr);
-		assertEquals(((TArr)finalType).typeLeft, ((TArr)finalType).typeRight);
-		assertTrue(((TArr)finalType).typeLeft instanceof TVar);
+		assertEquals(((TArr)finalType).typeLeft(), ((TArr)finalType).typeRight());
+		assertTrue(((TArr)finalType).typeLeft() instanceof TVar);
 	}
 	
 	/**
@@ -119,12 +119,12 @@ public class TestInference {
 		Type finalType = infer.infer(app);
 
 		Assert.assertTrue(finalType instanceof TArr);
-		Assert.assertTrue(((TArr)finalType).typeLeft instanceof TVar);
-		Type t2 = ((TArr)finalType).typeRight ;
+		Assert.assertTrue(((TArr)finalType).typeLeft() instanceof TVar);
+		Type t2 = ((TArr)finalType).typeRight() ;
 		Assert.assertTrue(t2 instanceof TArr);
 		TArr t3 = (TArr)t2 ;
-		Assert.assertEquals(t3.typeLeft,t3.typeRight);
-		Assert.assertTrue(t3.typeLeft instanceof TVar);
+		Assert.assertEquals(t3.typeLeft(),t3.typeRight());
+		Assert.assertTrue(t3.typeLeft() instanceof TVar);
 	}
 	
 	/**

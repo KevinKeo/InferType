@@ -6,20 +6,24 @@ import type.TVar;
 import type.Type;
 
 public class Subst {
-	public HashMap<TVar, Type> map;
+	private HashMap<TVar, Type> substituteMap;
 	
 	public Subst() {
-		this.map = new HashMap<>();
+		this.substituteMap = new HashMap<>();
 	}
 	
-	public Subst(HashMap<TVar,Type> map) {
-		this.map = map ;
+	public Subst(HashMap<TVar,Type> substituteMap) {
+		this.substituteMap = substituteMap;
 	}
 
 	public Subst compose(Subst s2){
-		Subst subst = new Subst(this.map);
-		s2.map.forEach((k,v) -> v = v.apply(this));
-		subst.map.putAll(s2.map);
+		Subst subst = new Subst(this.substituteMap);
+		s2.substituteMap.forEach((k, v) -> v = v.substitute(this));
+		subst.substituteMap.putAll(s2.substituteMap);
 		return subst ;
+	}
+
+	public HashMap<TVar,Type> substituteMap(){
+		return this.substituteMap;
 	}
 }

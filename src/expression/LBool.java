@@ -3,7 +3,7 @@ package expression;
 import type.TCon;
 
 public class LBool implements Lit {
-	boolean bool;
+	private boolean bool;
 
 	public LBool(boolean bool) {
 		this.bool = bool;

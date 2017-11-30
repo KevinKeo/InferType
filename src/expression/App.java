@@ -6,7 +6,7 @@ import type.TVar;
 import type.Type;
 
 public class App implements Expr{
-	Expr e1,e2;
+	private Expr e1,e2;
 
 	public App(Expr e1,Expr e2) {
 		this.e1=e1;
@@ -17,7 +17,7 @@ public class App implements Expr{
 	public Type infer(Infer infer) {
 		Type t1 = e1.infer(infer);
 		Type t2 = e2.infer(infer);
-		TVar tv = infer.inferState.fresh();
+		TVar tv = infer.inferState().fresh();
 		infer.uni(t1, new TArr(t2, tv));
 		return tv ;
 	}

@@ -5,7 +5,7 @@ import inference.Subst;
 import java.util.HashSet;
 
 public class TCon implements Type{
-	public String name;
+	private String name;
 	
 	public TCon(String name) {
 		this.name=name;
@@ -25,7 +25,7 @@ public class TCon implements Type{
 	}
 
 	@Override
-	public Type apply(Subst s) {
+	public Type substitute(Subst s) {
 		return this;
 	}
 

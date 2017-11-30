@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class TVar implements Type {
-	String name;
+	private String name;
 	
 	public TVar(String name) {
 		this.name=name;
@@ -28,8 +28,8 @@ public class TVar implements Type {
 	}
 
 	@Override
-	public Type apply(Subst s) {
-		return s.map.getOrDefault(this,this);
+	public Type substitute(Subst s) {
+		return s.substituteMap().getOrDefault(this,this);
 	}
 
 	@Override

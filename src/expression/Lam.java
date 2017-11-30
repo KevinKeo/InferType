@@ -9,8 +9,8 @@ import type.TVar;
 import type.Type;
 
 public class Lam implements Expr{
-	Var name;
-	Expr e;
+	private Var name;
+	private Expr e;
 	
 	public Lam(Var name, Expr e) {
 		this.name=name;
@@ -19,7 +19,7 @@ public class Lam implements Expr{
 	
 	@Override
 	public Type infer(Infer infer) {
-		TVar tv = infer.inferState.fresh();
+		TVar tv = infer.inferState().fresh();
 		Infer newInfer = infer.inEnv(name, new Scheme(tv,Collections.emptyList()));
 		Type t = e.infer(newInfer);
 		return new TArr(tv, t);

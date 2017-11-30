@@ -3,7 +3,8 @@ package expression;
 import type.TCon;
 
 public class LInt implements Lit{
-	Integer value;
+	private Integer value;
+
 	public LInt(int i) {
 		this.value=i;
 	}
