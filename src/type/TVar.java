@@ -1,6 +1,15 @@
 package type;
 
-public class TVar implements Type{
+import exception.UnificationException;
+import solver.Solvable;
+import susbstitution.Subst;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Optional;
+
+public class TVar implements Type {
 	String name;
 	
 	public TVar(String name) {
@@ -17,7 +26,33 @@ public class TVar implements Type{
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return "TVar("+name+")";
 	}
+
+	@Override
+	public Type apply(Subst s) {
+		return s.map.getOrDefault(this,this);
+	}
+
+	@Override
+	public HashSet<TVar> ftv() {
+		return new HashSet<>(Collections.singleton(this));
+	}
+
+	public boolean occursCheck(Type t){
+		return t.ftv().contains(this);
+	}
+
+	public Subst bind(Type t){
+		if (this == t) return new Subst();
+		if (this.occursCheck(t)) throw new UnificationException("InfiniteType",this,t);
+		HashMap<TVar,Type> map = new HashMap();
+		map.put(this,t);
+		return new Subst(map);
+	}
+
+	/*@Override
+	public Subst unifies(Type t2){
+		return same(t2).orElse(this.bind(t2));
+	}*/
 }

@@ -25,6 +25,6 @@ public class Let implements Expr {
 	
 	@Override
 	public String toString() {
-		return "Let(var:"+name.toString()+" e1:"+e1.toString()+" e2:"+e2.toString()+")";
+		return "Let(var:"+name+" e1:"+e1+" e2:"+e2+")";
 	}
 }

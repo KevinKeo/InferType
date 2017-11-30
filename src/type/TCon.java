@@ -1,5 +1,9 @@
 package type;
 
+import susbstitution.Subst;
+
+import java.util.HashSet;
+
 public class TCon implements Type{
 	public String name;
 	
@@ -18,5 +22,15 @@ public class TCon implements Type{
 			return this.name.equals(((TCon) obj).name);
 		}
 		return false ;
+	}
+
+	@Override
+	public Type apply(Subst s) {
+		return this;
+	}
+
+	@Override
+	public HashSet<TVar> ftv() {
+		return new HashSet<>();
 	}
 }

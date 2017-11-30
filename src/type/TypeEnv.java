@@ -1,13 +1,15 @@
 package type;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import expression.Var;
+import susbstitution.Subst;
+import susbstitution.Substitutable;
 
 
-public class TypeEnv {
+public class TypeEnv implements Substitutable<TypeEnv> {
 	public Map<Var, Scheme> env;
 	
 	public TypeEnv() {
@@ -31,5 +33,18 @@ public class TypeEnv {
 	        (env.keySet()).forEach(newEnv::remove);
 	        env.putAll(newEnv);
 	        return this;
+	}
+
+	@Override
+	public TypeEnv apply(Subst s) {
+		this.env.replaceAll((k,v) -> v.apply(s));
+		return this ;
+	}
+
+	@Override
+	public HashSet<TVar> ftv() {
+		HashSet<TVar> res = new HashSet<>();
+		this.env.values().forEach(sc -> res.addAll(sc.ftv()));
+		return res ;
 	}
 }

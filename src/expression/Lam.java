@@ -2,7 +2,6 @@ package expression;
 
 import java.util.Collections;
 
-import susbstitution.FreshName;
 import type.Infer;
 import type.Scheme;
 import type.TArr;
@@ -20,7 +19,7 @@ public class Lam implements Expr{
 	
 	@Override
 	public Type infer(Infer infer) {
-		TVar tv = FreshName.fresh();
+		TVar tv = infer.inferState.fresh();
 		Infer newInfer = infer.inEnv(name, new Scheme(tv,Collections.emptyList()));
 		Type t = e.infer(newInfer);
 		return new TArr(tv, t);
@@ -28,6 +27,6 @@ public class Lam implements Expr{
 	
 	@Override
 	public String toString() {
-		return "Lam(var:"+name.toString()+" expr:"+e.toString()+")";
+		return "Lam(var:"+name+" expr:"+e+")";
 	}
 }
