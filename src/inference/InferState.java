@@ -3,7 +3,7 @@ package inference;
 import type.TVar;
 
 public class InferState {
-	int counter = -1;
+	private int counter = -1;
 
 	public TVar fresh(){
 		this.counter++;

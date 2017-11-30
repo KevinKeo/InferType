@@ -9,8 +9,8 @@ import inference.Subst;
 import susbstitution.Substitutable;
 
 public class Scheme implements Substitutable<Scheme> {
-	public Type type;
-	public List<TVar> as;
+	private Type type;
+	private List<TVar> as;
 	
 	public Scheme(Type type, List<TVar> listTV) {
 		this.type = type;
@@ -19,7 +19,7 @@ public class Scheme implements Substitutable<Scheme> {
 
 	public Type instantiate(Infer infer) {
 		HashMap<TVar,Type> map = new HashMap<>();
-		this.as.forEach(tv -> map.put(tv,infer.inferState.fresh()));
+		this.as.forEach(tv -> map.put(tv,infer.inferState().fresh()));
 		return this.type.apply(new Subst(map));
 	}
 	
@@ -31,7 +31,7 @@ public class Scheme implements Substitutable<Scheme> {
 	@Override
 	public Scheme apply(Subst s) {
 		for(TVar tv : this.as)
-			s.map.remove(tv);
+			s.substituteMap().remove(tv);
 		this.type = this.type.apply(s);
 		return this ;
 	}

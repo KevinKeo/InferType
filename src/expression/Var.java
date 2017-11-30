@@ -16,10 +16,10 @@ public class Var implements Expr{
 	
 	@Override
 	public Type infer(Infer infer) {
-		if (infer.env.getEnv().containsKey(this) == false) 
+		if (infer.typeEnv().envMap().containsKey(this) == false)
 			throw new UnboundVariableException(this);
 		
-		return infer.env.getEnv().get(this).instantiate(infer);
+		return infer.typeEnv().envMap().get(this).instantiate(infer);
 	}
 	
 	@Override

@@ -10,41 +10,41 @@ import susbstitution.Substitutable;
 
 
 public class TypeEnv implements Substitutable<TypeEnv> {
-	public Map<Var, Scheme> env;
+	private Map<Var, Scheme> envMap;
 	
 	public TypeEnv() {
-		env = new HashMap<>();
+		envMap = new HashMap<>();
 	}
 	
 	public void extend (Var var, Scheme scheme) {
-		env.put(var, scheme);
+		envMap.put(var, scheme);
 	}
 	
 	public void remove(Var var) {
-		this.env.remove(var);
+		this.envMap.remove(var);
 	}
 	
-	public Map<Var, Scheme> getEnv(){
-		return this.env;
+	public Map<Var, Scheme> envMap(){
+		return this.envMap;
 	}
 	 public TypeEnv combine(TypeEnv typeEnv) {
 	        Map<Var, Scheme> newEnv = new HashMap<>();
-	        newEnv.putAll(typeEnv.env);
-	        (env.keySet()).forEach(newEnv::remove);
-	        env.putAll(newEnv);
+	        newEnv.putAll(typeEnv.envMap);
+	        (envMap.keySet()).forEach(newEnv::remove);
+	        envMap.putAll(newEnv);
 	        return this;
 	}
 
 	@Override
 	public TypeEnv apply(Subst s) {
-		this.env.replaceAll((k,v) -> v.apply(s));
+		this.envMap.replaceAll((k, v) -> v.apply(s));
 		return this ;
 	}
 
 	@Override
 	public HashSet<TVar> ftv() {
 		HashSet<TVar> res = new HashSet<>();
-		this.env.values().forEach(sc -> res.addAll(sc.ftv()));
+		this.envMap.values().forEach(sc -> res.addAll(sc.ftv()));
 		return res ;
 	}
 }

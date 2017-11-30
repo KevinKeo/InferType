@@ -9,9 +9,9 @@ import susbstitution.Substitutable;
 import type.*;
 
 public class Infer {
-	public TypeEnv env;
-	public List<Constraint> constraints;
-	public InferState inferState;
+	private TypeEnv env;
+	private List<Constraint> constraints;
+	private InferState inferState;
 
 	public Infer(){
 		this(new TypeEnv(),new ArrayList<>(),new InferState());
@@ -39,14 +39,14 @@ public class Infer {
 	private Subst solver(Subst subst){
 		if(this.constraints.isEmpty()) return subst ;
 		Constraint cs = this.constraints.get(0) ;
-		Subst su1 = cs.t1.unifies(cs.t2) ;
+		Subst su1 = cs.typeLeft().unifies(cs.typeRight()) ;
 		this.constraints.remove(0);
 		this.constraints = Substitutable.apply(su1,constraints);
 		return solver(su1.compose(subst));
 	}
 
 	private Type runSolve(Subst s, Type t){
-		for(TVar tv : s.map.keySet()){
+		for(TVar tv : s.substituteMap().keySet()){
 			t = t.apply(s);
 		}
 		return t ;
@@ -56,6 +56,14 @@ public class Infer {
 		Type t = e.infer(this);
 		Subst s = this.solver(new Subst());
 		return this.runSolve(s,t);
+	}
+
+	public InferState inferState(){
+		return this.inferState ;
+	}
+
+	public TypeEnv typeEnv(){
+		return this.env ;
 	}
 }
 	

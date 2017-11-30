@@ -7,7 +7,7 @@ import type.Type;
 import java.util.HashSet;
 
 public class Constraint implements Substitutable<Constraint> {
-	public Type t1,t2;
+	private Type t1,t2;
 	
 	public Constraint(Type t1, Type t2) {
 		this.t1=t1;
@@ -28,5 +28,13 @@ public class Constraint implements Substitutable<Constraint> {
 	@Override
 	public HashSet<TVar> ftv() {
 		return null; //TODO - never call
+	}
+
+	public Type typeLeft(){
+		return this.t1 ;
+	}
+
+	public Type typeRight(){
+		return this.t2 ;
 	}
 }

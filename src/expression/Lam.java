@@ -19,7 +19,7 @@ public class Lam implements Expr{
 	
 	@Override
 	public Type infer(Infer infer) {
-		TVar tv = infer.inferState.fresh();
+		TVar tv = infer.inferState().fresh();
 		Infer newInfer = infer.inEnv(name, new Scheme(tv,Collections.emptyList()));
 		Type t = e.infer(newInfer);
 		return new TArr(tv, t);
