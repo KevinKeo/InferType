@@ -29,4 +29,10 @@ public class TArr implements Type{
 		r.addAll(this.typeRight.ftv());
 		return r ;
 	}
+
+	public Subst unifyMany(TArr t2){
+		Subst su1 = this.typeLeft.unifies(t2.typeLeft);
+		Subst su2 = this.typeRight.apply(su1).unifies(t2.typeRight.apply(su1));
+		return su2.compose(su1);
+	}
 }

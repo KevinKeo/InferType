@@ -17,8 +17,6 @@ import expression.Let;
 import expression.Var;
 
 import org.junit.Assert;
-import solver.Solve;
-import solver.Unifier;
 import susbstitution.Subst;
 import type.Constraint;
 import type.Infer;
@@ -41,9 +39,8 @@ public class TestInference {
 		Infer infer = new Infer(new TypeEnv(), new ArrayList<>(), new InferState());
 		Expr boolExp = new LBool(true);
         Type t = boolExp.infer(infer);
-        Unifier u = new Unifier(new Subst(),infer.constraints);
-		Subst s = Solve.solver(u);
-		Type finalType = Solve.runSolve(s,t);
+		Subst s = infer.solver(new Subst());
+		Type finalType = infer.runSolve(s,t);
 		Assert.assertEquals(finalType, tBool);
 	}
 	/**
@@ -54,9 +51,9 @@ public class TestInference {
 		Infer infer = new Infer(new TypeEnv(), new ArrayList<>(), new InferState());
 		Expr boolInt = new LInt(1);
         Type t = boolInt.infer(infer);
-        Unifier u = new Unifier(new Subst(),infer.constraints);
-		Subst s = Solve.solver(u);
-		Type finalType = Solve.runSolve(s,t);
+
+		Subst s = infer.solver(new Subst());
+		Type finalType = infer.runSolve(s,t);
 		Assert.assertEquals(finalType, tInt);
 	}
 
@@ -77,9 +74,9 @@ public class TestInference {
 		Var x = new Var("x");
 		Lam lamExp = new Lam(x,x);
 		Type t = lamExp.infer(infer);
-		Unifier u = new Unifier(new Subst(),infer.constraints);
-		Subst s = Solve.solver(u);
-		Type finalType = Solve.runSolve(s,t);
+
+		Subst s = infer.solver(new Subst());
+		Type finalType = infer.runSolve(s,t);
 		assertTrue(finalType instanceof TArr);
 		assertEquals(((TArr)finalType).typeLeft, ((TArr)finalType).typeRight);
 		assertTrue(((TArr)finalType).typeLeft instanceof TVar);
@@ -95,9 +92,9 @@ public class TestInference {
 	    Lam lamExp = new Lam(new Var("x"),boolExp);
 	    App appExp = new App(lamExp, new LInt(1));
 	    Type t = appExp.infer(infer);
-        Unifier u = new Unifier(new Subst(),infer.constraints);
-		Subst s = Solve.solver(u);
-		Type finalType = Solve.runSolve(s,t);
+
+		Subst s = infer.solver(new Subst());
+		Type finalType = infer.runSolve(s,t);
 		Assert.assertEquals(finalType, tBool);
 	}
 	
@@ -112,10 +109,8 @@ public class TestInference {
 	    App appExp = new App(lamExp, new LInt(1));
 	    Type t = appExp.infer(infer);
 
-
-        Unifier u = new Unifier(new Subst(),infer.constraints);
-		Subst s = Solve.solver(u);
-		Type finalType = Solve.runSolve(s,t);
+		Subst s = infer.solver(new Subst());
+		Type finalType = infer.runSolve(s,t);
 		Assert.assertEquals(finalType, tInt);
 	}
 
@@ -135,11 +130,9 @@ public class TestInference {
 		Lam l2 = new Lam(a,new Lam(b,b));
 		App app = new App(l1,l2);
 
-
 		Type t = app.infer(infer);
-		Unifier u = new Unifier(new Subst(),infer.constraints);
-		Subst s = Solve.solver(u);
-		Type finalType = Solve.runSolve(s,t);
+		Subst s = infer.solver(new Subst());
+		Type finalType = infer.runSolve(s,t);
 
 		Assert.assertTrue(finalType instanceof TArr);
 		Assert.assertTrue(((TArr)finalType).typeLeft instanceof TVar);
@@ -172,10 +165,8 @@ public class TestInference {
 
 		Type t = let.infer(infer);
 
-		Unifier u = new Unifier(new Subst(),infer.constraints);
-
-		Subst s = Solve.solver(u);
-		Type finalType = Solve.runSolve(s,t);
+		Subst s = infer.solver(new Subst());
+		Type finalType = infer.runSolve(s,t);
 		assertEquals(finalType, tInt);
 	}
 	
@@ -202,11 +193,7 @@ public class TestInference {
 		
 		Type t = superApp.infer(infer);
 
-		Unifier u = new Unifier(new Subst(),infer.constraints);
-
-		Subst s = Solve.solver(u);
-		Solve.runSolve(s,t);
+		Subst s = infer.solver(new Subst());
+		infer.runSolve(s,t);
 	}
-	
-	
 }

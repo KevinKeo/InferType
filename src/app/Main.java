@@ -8,8 +8,6 @@ import expression.LInt;
 import expression.Lam;
 import expression.Let;
 import expression.Var;
-import solver.Solve;
-import solver.Unifier;
 import susbstitution.Subst;
 import type.Constraint;
 import type.Infer;
@@ -65,10 +63,8 @@ public class Main {
 
 		Type t = let.infer(infer);
 
-		Unifier u = new Unifier(new Subst(),infer.constraints);
-
-		Subst s = Solve.solver(u);
-		Type finalType = Solve.runSolve(s,t);
+		Subst s = infer.solver(new Subst());
+		Type finalType = infer.runSolve(s,t);
 		System.out.println(finalType);
 		//System.out.println(u.subst.map);
 	}
