@@ -34,12 +34,12 @@ public class Solve {
 	}
 
 	public static boolean occursCheck(TVar a, Type t){
-	    return Substitutable.ftv(t).contains(a);
+	    return t.ftv().contains(a);
     }
 
     public static Subst unifyMany(TArr t1, TArr t2){
         Subst su1 = unifies(t1.typeLeft,t2.typeLeft);
-        Subst su2 = unifies(Substitutable.apply(su1,t1.typeRight), Substitutable.apply(su1,t2.typeRight));
+        Subst su2 = unifies(t1.typeRight.apply(su1), t2.typeRight.apply(su1));
         return su2.compose(su1);
     }
 
@@ -48,13 +48,13 @@ public class Solve {
         Constraint cs = u.constraints.get(0) ;
         Subst su1 = unifies(cs.t1,cs.t2) ;
         u.constraints.remove(0);
-        return solver(new Unifier(su1.compose(u.subst),Substitutable.<Constraint>apply(su1,u.constraints)));
+        return solver(new Unifier(su1.compose(u.subst), Substitutable.apply(su1,u.constraints)));
     }
 
 
     public static Type runSolve(Subst s, Type t){
         for(TVar tv : s.map.keySet()){
-            t = Substitutable.apply(s,t);
+            t = t.apply(s);
         }
         return t ;
     }

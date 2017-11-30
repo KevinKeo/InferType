@@ -19,7 +19,7 @@ public class Subst {
 
 	public Subst compose(Subst s2){
 		Subst subst = new Subst(this.map);
-		s2.map.forEach((k,v) -> v = Substitutable.apply(this, v));
+		s2.map.forEach((k,v) -> v = v.apply(this));
 		subst.map.putAll(s2.map);
 		return subst ;
 	}

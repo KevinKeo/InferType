@@ -5,12 +5,12 @@ import java.util.Set;
 
 import susbstitution.Substitutable;
 
-public interface Type {
+public interface Type extends Substitutable<Type> {
 	
 	default Scheme generalize(TypeEnv env) {
-		Set<TVar> setT = Substitutable.ftv(this);
-		Substitutable.ftv(env).forEach(setT::remove);	
-		return new Scheme(this,new ArrayList<TVar>(setT));
+		Set<TVar> setT = this.ftv();
+		env.ftv().forEach(setT::remove);
+		return new Scheme(this,new ArrayList<>(setT));
 	}
 	
 }

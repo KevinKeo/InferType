@@ -1,12 +1,13 @@
 package type;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import susbstitution.Subst;
 import susbstitution.Substitutable;
 
-public class Scheme {
+public class Scheme implements Substitutable<Scheme> {
 	public Type type;
 	public List<TVar> as;
 	
@@ -18,7 +19,7 @@ public class Scheme {
 	public Type instantiate(Infer infer) {
 		HashMap<TVar,Type> map = new HashMap<>();
 		this.as.forEach(tv -> map.put(tv,infer.inferState.fresh()));
-		return Substitutable.apply(new Subst(map), this.type);
+		return this.type.apply(new Subst(map));
 	}
 	
 	@Override
@@ -26,4 +27,18 @@ public class Scheme {
 		return "Scheme(type:"+type.toString()+" et ListTVar:"+as.toString()+")";
 	}
 
+	@Override
+	public Scheme apply(Subst s) {
+		for(TVar tv : this.as)
+			s.map.remove(tv);
+		this.type = this.type.apply(s);
+		return this ;
+	}
+
+	@Override
+	public HashSet<TVar> ftv() {
+		HashSet<TVar> setT = this.type.ftv();
+		this.as.forEach(setT::remove);
+		return setT ;
+	}
 }

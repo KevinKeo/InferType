@@ -1,6 +1,11 @@
 package type;
 
-public class TVar implements Type{
+import susbstitution.Subst;
+
+import java.util.Collections;
+import java.util.HashSet;
+
+public class TVar implements Type {
 	String name;
 	
 	public TVar(String name) {
@@ -18,5 +23,15 @@ public class TVar implements Type{
 	@Override
 	public String toString() {
 		return "TVar("+name+")";
+	}
+
+	@Override
+	public Type apply(Subst s) {
+		return s.map.getOrDefault(this,this);
+	}
+
+	@Override
+	public HashSet<TVar> ftv() {
+		return new HashSet<>(Collections.singleton(this));
 	}
 }
