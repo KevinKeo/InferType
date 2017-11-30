@@ -11,7 +11,6 @@ public class TArr implements Type{
 	
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return typeLeft.toString()+" -> "+typeRight.toString();
 	}
 }

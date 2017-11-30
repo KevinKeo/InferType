@@ -2,9 +2,7 @@ package type;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import susbstitution.FreshName;
 import susbstitution.Subst;
 import susbstitution.Substitutable;
 
@@ -16,17 +14,10 @@ public class Scheme {
 		this.type = type;
 		this.as = listTV;
 	}
-	
-	/* 
-	 * instantiate ::  Scheme -> Infer Type
-	   instantiate (Forall as t) = do
-	   	as' <- mapM (const fresh) as
-	    let s = Map.fromList $ zip as as'
-	    return $ runSolve s t
-	 */
-	public Type instantiate() {
+
+	public Type instantiate(Infer infer) {
 		HashMap<TVar,Type> map = new HashMap<>();
-		this.as.forEach(tv -> map.put(tv,FreshName.fresh()));
+		this.as.forEach(tv -> map.put(tv,infer.inferState.fresh()));
 		return Substitutable.apply(new Subst(map), this.type);
 	}
 	

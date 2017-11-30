@@ -19,7 +19,7 @@ public class Var implements Expr{
 		if (infer.env.getEnv().containsKey(this) == false) 
 			throw new UnboundVariableException(this);
 		
-		return infer.env.getEnv().get(this).instantiate();
+		return infer.env.getEnv().get(this).instantiate(infer);
 	}
 	
 	@Override

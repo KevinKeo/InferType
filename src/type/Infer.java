@@ -18,7 +18,6 @@ public class Infer {
 	public Infer uni(Type t1, Type t2) {
 		Constraint c = new Constraint(t1, t2);
 		constraints.add(c);
-		System.out.println("Uni dans infer, add new constraints :"+t1+" - "+t2);
 		return this;
 	}
 	
