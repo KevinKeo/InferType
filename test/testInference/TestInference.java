@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
+import exception.UnificationException;
 import org.junit.Test;
 
 import exception.UnboundVariableException;
@@ -37,7 +38,7 @@ public class TestInference {
 	 */
 	@Test
 	public void simpleInferBool() {
-		Infer infer = new Infer(new TypeEnv(), new ArrayList<Constraint>(), new InferState());
+		Infer infer = new Infer(new TypeEnv(), new ArrayList<>(), new InferState());
 		Expr boolExp = new LBool(true);
         Type t = boolExp.infer(infer);
         Unifier u = new Unifier(new Subst(),infer.constraints);
@@ -50,7 +51,7 @@ public class TestInference {
 	 */
 	@Test
 	public void simpleInferInt() {
-		Infer infer = new Infer(new TypeEnv(), new ArrayList<Constraint>(), new InferState());
+		Infer infer = new Infer(new TypeEnv(), new ArrayList<>(), new InferState());
 		Expr boolInt = new LInt(1);
         Type t = boolInt.infer(infer);
         Unifier u = new Unifier(new Subst(),infer.constraints);
@@ -58,17 +59,25 @@ public class TestInference {
 		Type finalType = Solve.runSolve(s,t);
 		Assert.assertEquals(finalType, tInt);
 	}
-	
+
+	@Test(expected = UnboundVariableException.class)
+	public void simpleInferVar() {
+		Infer infer = new Infer(new TypeEnv(), new ArrayList<>(), new InferState());
+		Var v = new Var("x");
+		v.infer(infer);
+	}
+
+
 	/**
-	 * Test Lambda (\x->x) 
+	 * Test Lambda (\x->x)
 	 */
 	@Test
 	public void lambdaInfer() {
-		Infer infer = new Infer(new TypeEnv(), new ArrayList<Constraint>(), new InferState());
+		Infer infer = new Infer(new TypeEnv(), new ArrayList<>(), new InferState());
 		Var x = new Var("x");
-	    Lam lamExp = new Lam(x,x);
-	    Type t = lamExp.infer(infer);
-        Unifier u = new Unifier(new Subst(),infer.constraints);
+		Lam lamExp = new Lam(x,x);
+		Type t = lamExp.infer(infer);
+		Unifier u = new Unifier(new Subst(),infer.constraints);
 		Subst s = Solve.solver(u);
 		Type finalType = Solve.runSolve(s,t);
 		assertTrue(finalType instanceof TArr);
@@ -81,7 +90,7 @@ public class TestInference {
 	 */
 	@Test
 	public void lambdaBoolInfer() {
-		Infer infer = new Infer(new TypeEnv(), new ArrayList<Constraint>(), new InferState());
+		Infer infer = new Infer(new TypeEnv(), new ArrayList<>(), new InferState());
 		Expr boolExp = new LBool(true);
 	    Lam lamExp = new Lam(new Var("x"),boolExp);
 	    App appExp = new App(lamExp, new LInt(1));
@@ -93,19 +102,52 @@ public class TestInference {
 	}
 	
 	/**
-	 * Test App (\x->x) 1
+	 * Test App (\x->x) 1 - Bool
 	 */
 	@Test
 	public void lambdaIntInfer() {
-		Infer infer = new Infer(new TypeEnv(), new ArrayList<Constraint>(), new InferState());
+		Infer infer = new Infer(new TypeEnv(), new ArrayList<>(), new InferState());
 		Var x = new Var("x");
 	    Lam lamExp = new Lam(x,x);
 	    App appExp = new App(lamExp, new LInt(1));
 	    Type t = appExp.infer(infer);
+
+
         Unifier u = new Unifier(new Subst(),infer.constraints);
 		Subst s = Solve.solver(u);
 		Type finalType = Solve.runSolve(s,t);
 		Assert.assertEquals(finalType, tInt);
+	}
+
+
+
+	/**
+	 * Test Lambda (\x->x)(\a b -> b) - t1 -> t2 -> t2
+	 */
+	@Test
+	public void lambdaofLambdaInfer() {
+		Infer infer = new Infer(new TypeEnv(), new ArrayList<>(), new InferState());
+		Var x = new Var("x");
+		Var a = new Var("a");
+		Var b = new Var("b");
+
+		Lam l1 = new Lam(x,x);
+		Lam l2 = new Lam(a,new Lam(b,b));
+		App app = new App(l1,l2);
+
+
+		Type t = app.infer(infer);
+		Unifier u = new Unifier(new Subst(),infer.constraints);
+		Subst s = Solve.solver(u);
+		Type finalType = Solve.runSolve(s,t);
+
+		Assert.assertTrue(finalType instanceof TArr);
+		Assert.assertTrue(((TArr)finalType).typeLeft instanceof TVar);
+		Type t2 = ((TArr)finalType).typeRight ;
+		Assert.assertTrue(t2 instanceof TArr);
+		TArr t3 = (TArr)t2 ;
+		Assert.assertEquals(t3.typeLeft,t3.typeRight);
+		Assert.assertTrue(t3.typeLeft instanceof TVar);
 	}
 	
 	/**
@@ -138,30 +180,32 @@ public class TestInference {
 	}
 	
 	/**
-	 * Test error (\f -> (\ab->b) (f true) (f 1))(\x->x)
+	 * Test error (\f -> (\ab->b) (f True) (f 1))(\x->x)
 	 */
-	@Test(expected = UnboundVariableException.class)
+	@Test(expected = UnificationException.class)
 	public void letErrorInfer() {
 		Infer infer = new Infer(new TypeEnv(), new ArrayList<Constraint>(), new InferState());		
 		Var x = new Var("x");
 		Var a = new Var("a");
 		Var b = new Var("b");
 		Var f = new Var("f");
+
 		Lam l = new Lam(x, x); //(\x->x)
 		Lam l2 = new Lam(a,new Lam(b,b)); //(\ab->b)
-		Lam l3 = new Lam(f,l2); //(\f->(\ab->b))
 		App a1 = new App(f, new LBool(true)); //(f true)
 		App a2 = new App(f, new LInt(1)); // (f 1)
+
+		Lam l3 = new Lam(f,new App(new App(l2,a1),a2)); //(\f->(\ab->b))
+
 		
-		App app = new App(new App(l3,a1),a2);
-		App superApp = new App(app,l);
+		App superApp = new App(l3,l);
 		
 		Type t = superApp.infer(infer);
 
 		Unifier u = new Unifier(new Subst(),infer.constraints);
 
 		Subst s = Solve.solver(u);
-		Type finalType = Solve.runSolve(s,t);
+		Solve.runSolve(s,t);
 	}
 	
 	
