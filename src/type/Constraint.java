@@ -15,7 +15,7 @@ public class Constraint implements Substitutable<Constraint> {
 	
 	@Override
 	public String toString() {
-		return t1.toString() +" - "+ t2.toString();
+		return t1 +" - "+ t2;
 	}
 
 

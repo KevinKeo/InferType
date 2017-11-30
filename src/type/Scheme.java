@@ -24,7 +24,7 @@ public class Scheme implements Substitutable<Scheme> {
 	
 	@Override
 	public String toString() {
-		return "Scheme(type:"+type.toString()+" et ListTVar:"+as.toString()+")";
+		return "Scheme(type:"+type+" et ListTVar:"+as+")";
 	}
 
 	@Override

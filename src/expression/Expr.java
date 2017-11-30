@@ -5,5 +5,5 @@ import type.Type;
 
 public interface Expr {
 	
-	public Type infer(Infer infer);
+	Type infer(Infer infer);
 }

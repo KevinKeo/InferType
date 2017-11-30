@@ -27,6 +27,6 @@ public class Lam implements Expr{
 	
 	@Override
 	public String toString() {
-		return "Lam(var:"+name.toString()+" expr:"+e.toString()+")";
+		return "Lam(var:"+name+" expr:"+e+")";
 	}
 }

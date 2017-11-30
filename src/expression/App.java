@@ -7,6 +7,7 @@ import type.Type;
 
 public class App implements Expr{
 	Expr e1,e2;
+
 	public App(Expr e1,Expr e2) {
 		this.e1=e1;
 		this.e2=e2;
@@ -23,6 +24,6 @@ public class App implements Expr{
 	
 	@Override
 	public String toString() {
-		return "App(e1:"+e1.toString()+" e2:"+e2.toString()+")";
+		return "App(e1:"+e1+" e2:"+e2+")";
 	}
 }
