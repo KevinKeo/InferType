@@ -13,8 +13,8 @@ public class TArr implements Type{
 	}
 
 	@Override
-	public Type apply(Subst s) {
-		return new TArr(this.typeLeft.apply(s), this.typeRight.apply(s)) ;
+	public Type substitute(Subst s) {
+		return new TArr(this.typeLeft.substitute(s), this.typeRight.substitute(s)) ;
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class TArr implements Type{
 
 	public Subst unifyMany(TArr t2){
 		Subst su1 = this.typeLeft.unifies(t2.typeLeft);
-		Subst su2 = this.typeRight.apply(su1).unifies(t2.typeRight.apply(su1));
+		Subst su2 = this.typeRight.substitute(su1).unifies(t2.typeRight.substitute(su1));
 		return su2.compose(su1);
 	}
 

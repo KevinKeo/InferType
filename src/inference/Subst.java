@@ -1,7 +1,6 @@
 package inference;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 import type.TVar;
 import type.Type;
@@ -19,7 +18,7 @@ public class Subst {
 
 	public Subst compose(Subst s2){
 		Subst subst = new Subst(this.substituteMap);
-		s2.substituteMap.forEach((k, v) -> v = v.apply(this));
+		s2.substituteMap.forEach((k, v) -> v = v.substitute(this));
 		subst.substituteMap.putAll(s2.substituteMap);
 		return subst ;
 	}

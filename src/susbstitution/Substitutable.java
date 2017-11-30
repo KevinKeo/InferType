@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 
 public interface Substitutable<T extends Substitutable<T>> {
 
-    T apply(Subst s);
+    T substitute(Subst s);
     HashSet<TVar> ftv();
 
-    static <Y extends Substitutable<Y>> List<Y> apply(Subst s, List<Y> c){
-        return c.stream().map(e -> e.apply(s)).collect(Collectors.toList());
+    static <Y extends Substitutable<Y>> List<Y> substitute(Subst s, List<Y> c){
+        return c.stream().map(e -> e.substitute(s)).collect(Collectors.toList());
     }
 
 }

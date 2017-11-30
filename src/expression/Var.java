@@ -5,7 +5,7 @@ import inference.Infer;
 import type.Type;
 
 public class Var implements Expr{
-	String name;
+	private String name;
 	public Var(String name) {
 		this.name=name;
 	}

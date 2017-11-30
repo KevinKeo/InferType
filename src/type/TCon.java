@@ -25,7 +25,7 @@ public class TCon implements Type{
 	}
 
 	@Override
-	public Type apply(Subst s) {
+	public Type substitute(Subst s) {
 		return this;
 	}
 

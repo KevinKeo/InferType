@@ -20,7 +20,7 @@ public class Scheme implements Substitutable<Scheme> {
 	public Type instantiate(Infer infer) {
 		HashMap<TVar,Type> map = new HashMap<>();
 		this.as.forEach(tv -> map.put(tv,infer.inferState().fresh()));
-		return this.type.apply(new Subst(map));
+		return this.type.substitute(new Subst(map));
 	}
 	
 	@Override
@@ -29,10 +29,10 @@ public class Scheme implements Substitutable<Scheme> {
 	}
 
 	@Override
-	public Scheme apply(Subst s) {
+	public Scheme substitute(Subst s) {
 		for(TVar tv : this.as)
 			s.substituteMap().remove(tv);
-		this.type = this.type.apply(s);
+		this.type = this.type.substitute(s);
 		return this ;
 	}
 

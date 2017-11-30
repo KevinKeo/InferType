@@ -21,8 +21,8 @@ public class Constraint implements Substitutable<Constraint> {
 
 
 	@Override
-	public Constraint apply(Subst s) {
-		return new Constraint(this.t1.apply(s), this.t2.apply(s));
+	public Constraint substitute(Subst s) {
+		return new Constraint(this.t1.substitute(s), this.t2.substitute(s));
 	}
 
 	@Override

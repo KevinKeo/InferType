@@ -36,8 +36,8 @@ public class TypeEnv implements Substitutable<TypeEnv> {
 	}
 
 	@Override
-	public TypeEnv apply(Subst s) {
-		this.envMap.replaceAll((k, v) -> v.apply(s));
+	public TypeEnv substitute(Subst s) {
+		this.envMap.replaceAll((k, v) -> v.substitute(s));
 		return this ;
 	}
 

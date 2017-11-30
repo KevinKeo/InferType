@@ -41,13 +41,13 @@ public class Infer {
 		Constraint cs = this.constraints.get(0) ;
 		Subst su1 = cs.typeLeft().unifies(cs.typeRight()) ;
 		this.constraints.remove(0);
-		this.constraints = Substitutable.apply(su1,constraints);
+		this.constraints = Substitutable.substitute(su1,constraints);
 		return solver(su1.compose(subst));
 	}
 
 	private Type runSolve(Subst s, Type t){
 		for(TVar tv : s.substituteMap().keySet()){
-			t = t.apply(s);
+			t = t.substitute(s);
 		}
 		return t ;
 	}

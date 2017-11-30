@@ -28,7 +28,7 @@ public class TVar implements Type {
 	}
 
 	@Override
-	public Type apply(Subst s) {
+	public Type substitute(Subst s) {
 		return s.substituteMap().getOrDefault(this,this);
 	}
 
