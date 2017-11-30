@@ -2,8 +2,6 @@ package testInference;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
-
 import exception.UnificationException;
 import org.junit.Test;
 
@@ -17,15 +15,11 @@ import expression.Let;
 import expression.Var;
 
 import org.junit.Assert;
-import susbstitution.Subst;
-import type.Constraint;
 import type.Infer;
-import type.InferState;
 import type.TArr;
 import type.TCon;
 import type.TVar;
 import type.Type;
-import type.TypeEnv;
 
 public class TestInference {
 	private TCon tBool = new TCon("Bool");
@@ -36,11 +30,9 @@ public class TestInference {
 	 */
 	@Test
 	public void simpleInferBool() {
-		Infer infer = new Infer(new TypeEnv(), new ArrayList<>(), new InferState());
+		Infer infer = new Infer();
 		Expr boolExp = new LBool(true);
-        Type t = boolExp.infer(infer);
-		Subst s = infer.solver(new Subst());
-		Type finalType = infer.runSolve(s,t);
+        Type finalType = infer.infer(boolExp);
 		Assert.assertEquals(finalType, tBool);
 	}
 	/**
@@ -48,20 +40,18 @@ public class TestInference {
 	 */
 	@Test
 	public void simpleInferInt() {
-		Infer infer = new Infer(new TypeEnv(), new ArrayList<>(), new InferState());
+		Infer infer = new Infer();
 		Expr boolInt = new LInt(1);
-        Type t = boolInt.infer(infer);
+		Type finalType = infer.infer(boolInt);
 
-		Subst s = infer.solver(new Subst());
-		Type finalType = infer.runSolve(s,t);
 		Assert.assertEquals(finalType, tInt);
 	}
 
 	@Test(expected = UnboundVariableException.class)
 	public void simpleInferVar() {
-		Infer infer = new Infer(new TypeEnv(), new ArrayList<>(), new InferState());
+		Infer infer = new Infer();
 		Var v = new Var("x");
-		v.infer(infer);
+		infer.infer(v);
 	}
 
 
@@ -70,13 +60,11 @@ public class TestInference {
 	 */
 	@Test
 	public void lambdaInfer() {
-		Infer infer = new Infer(new TypeEnv(), new ArrayList<>(), new InferState());
+		Infer infer = new Infer();
 		Var x = new Var("x");
 		Lam lamExp = new Lam(x,x);
-		Type t = lamExp.infer(infer);
+		Type finalType = infer.infer(lamExp);
 
-		Subst s = infer.solver(new Subst());
-		Type finalType = infer.runSolve(s,t);
 		assertTrue(finalType instanceof TArr);
 		assertEquals(((TArr)finalType).typeLeft, ((TArr)finalType).typeRight);
 		assertTrue(((TArr)finalType).typeLeft instanceof TVar);
@@ -87,14 +75,13 @@ public class TestInference {
 	 */
 	@Test
 	public void lambdaBoolInfer() {
-		Infer infer = new Infer(new TypeEnv(), new ArrayList<>(), new InferState());
+		Infer infer = new Infer();
 		Expr boolExp = new LBool(true);
 	    Lam lamExp = new Lam(new Var("x"),boolExp);
 	    App appExp = new App(lamExp, new LInt(1));
-	    Type t = appExp.infer(infer);
 
-		Subst s = infer.solver(new Subst());
-		Type finalType = infer.runSolve(s,t);
+	    Type finalType = infer.infer(appExp);
+
 		Assert.assertEquals(finalType, tBool);
 	}
 	
@@ -103,14 +90,13 @@ public class TestInference {
 	 */
 	@Test
 	public void lambdaIntInfer() {
-		Infer infer = new Infer(new TypeEnv(), new ArrayList<>(), new InferState());
+		Infer infer = new Infer();
 		Var x = new Var("x");
 	    Lam lamExp = new Lam(x,x);
 	    App appExp = new App(lamExp, new LInt(1));
-	    Type t = appExp.infer(infer);
 
-		Subst s = infer.solver(new Subst());
-		Type finalType = infer.runSolve(s,t);
+		Type finalType = infer.infer(appExp);
+
 		Assert.assertEquals(finalType, tInt);
 	}
 
@@ -120,8 +106,8 @@ public class TestInference {
 	 * Test Lambda (\x->x)(\a b -> b) - t1 -> t2 -> t2
 	 */
 	@Test
-	public void lambdaofLambdaInfer() {
-		Infer infer = new Infer(new TypeEnv(), new ArrayList<>(), new InferState());
+	public void lambdaOfLambdaInfer() {
+		Infer infer = new Infer();
 		Var x = new Var("x");
 		Var a = new Var("a");
 		Var b = new Var("b");
@@ -130,9 +116,7 @@ public class TestInference {
 		Lam l2 = new Lam(a,new Lam(b,b));
 		App app = new App(l1,l2);
 
-		Type t = app.infer(infer);
-		Subst s = infer.solver(new Subst());
-		Type finalType = infer.runSolve(s,t);
+		Type finalType = infer.infer(app);
 
 		Assert.assertTrue(finalType instanceof TArr);
 		Assert.assertTrue(((TArr)finalType).typeLeft instanceof TVar);
@@ -148,7 +132,7 @@ public class TestInference {
 	 */
 	@Test
 	public void letInfer() {
-		Infer infer = new Infer(new TypeEnv(), new ArrayList<Constraint>(), new InferState());		
+		Infer infer = new Infer();
 		Var x = new Var("x");
 		Var a = new Var("a");
 		Var b = new Var("b");
@@ -163,10 +147,8 @@ public class TestInference {
 		
 		Let let = new Let(f, l, superApp);
 
-		Type t = let.infer(infer);
+		Type finalType = infer.infer(let);
 
-		Subst s = infer.solver(new Subst());
-		Type finalType = infer.runSolve(s,t);
 		assertEquals(finalType, tInt);
 	}
 	
@@ -175,7 +157,7 @@ public class TestInference {
 	 */
 	@Test(expected = UnificationException.class)
 	public void letErrorInfer() {
-		Infer infer = new Infer(new TypeEnv(), new ArrayList<Constraint>(), new InferState());		
+		Infer infer = new Infer();
 		Var x = new Var("x");
 		Var a = new Var("a");
 		Var b = new Var("b");
@@ -187,13 +169,9 @@ public class TestInference {
 		App a2 = new App(f, new LInt(1)); // (f 1)
 
 		Lam l3 = new Lam(f,new App(new App(l2,a1),a2)); //(\f->(\ab->b))
-
 		
 		App superApp = new App(l3,l);
-		
-		Type t = superApp.infer(infer);
 
-		Subst s = infer.solver(new Subst());
-		infer.runSolve(s,t);
+		infer.infer(superApp);
 	}
 }

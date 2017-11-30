@@ -1,7 +1,9 @@
 package type;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import expression.Expr;
 import expression.Var;
 import susbstitution.Subst;
 import susbstitution.Substitutable;
@@ -10,7 +12,11 @@ public class Infer {
 	public TypeEnv env;
 	public List<Constraint> constraints;
 	public InferState inferState;
-	
+
+	public Infer(){
+		this(new TypeEnv(),new ArrayList<>(),new InferState());
+	}
+
 	public Infer(TypeEnv env, List<Constraint> constraints, InferState inferState) {
 		this.env = env ;
 		this.constraints = constraints ;
@@ -30,7 +36,7 @@ public class Infer {
 		return m;
 	}
 
-	public Subst solver(Subst subst){
+	private Subst solver(Subst subst){
 		if(this.constraints.isEmpty()) return subst ;
 		Constraint cs = this.constraints.get(0) ;
 		Subst su1 = cs.t1.unifies(cs.t2) ;
@@ -39,11 +45,17 @@ public class Infer {
 		return solver(su1.compose(subst));
 	}
 
-	public Type runSolve(Subst s, Type t){
+	private Type runSolve(Subst s, Type t){
 		for(TVar tv : s.map.keySet()){
 			t = t.apply(s);
 		}
 		return t ;
+	}
+
+	public Type infer(Expr e){
+		Type t = e.infer(this);
+		Subst s = this.solver(new Subst());
+		return this.runSolve(s,t);
 	}
 }
 	

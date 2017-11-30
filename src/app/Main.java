@@ -17,34 +17,6 @@ import type.TypeEnv;
 
 public class Main {
 	public static void main(String[] args) {
-		/*Infer infer = new Infer(new TypeEnv(), new ArrayList<Constraint>(), new InferState());
-
-		Expr boolExp = new LBool(true);
-        Type t = boolExp.infer(infer);
-        System.out.println(t);*/
-        
-		/*
-		 * TEST 2 
-		 * Infer infer = new Infer(new TypeEnv(), new ArrayList<Constraint>(), new InferState());
-		
-		Expr boolExp = new LBool(true);
-        Lam lamExp = new Lam(new Var("x"),boolExp);
-        Type t2 = lamExp.infer(infer);
-        System.out.println(t2);*/
-
-		/* TEST 3
-		 * Infer infer = new Infer(new TypeEnv(), new ArrayList<Constraint>(), new InferState());
-
-		
-        Var f = new Var("f");
-        Var x = new Var("x");
-        Lam l = new Lam(x, x);
-        App app = new App(f, new LBool(true));
-        Let expFinal = new Let(f, l, app);
-
-        Type t3 = expFinal.infer(infer); */
-
-
 		Infer infer= new Infer(new TypeEnv(), new ArrayList<Constraint>(), new InferState());
 	
 		Var x = new Var("x");
@@ -61,11 +33,8 @@ public class Main {
 		
 		Let let = new Let(f, l, superApp);
 
-		Type t = let.infer(infer);
+		Type finalType = infer.infer(let);
 
-		Subst s = infer.solver(new Subst());
-		Type finalType = infer.runSolve(s,t);
 		System.out.println(finalType);
-		//System.out.println(u.subst.map);
 	}
 }
