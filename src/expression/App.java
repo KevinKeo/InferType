@@ -5,7 +5,7 @@ import type.TArr;
 import type.TVar;
 import type.Type;
 
-public class App implements Expr{
+public class App extends Expr{
 	private Expr e1,e2;
 
 	public App(Expr e1,Expr e2) {

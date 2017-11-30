@@ -4,11 +4,11 @@ import inference.Infer;
 import type.TCon;
 import type.Type;
 
-public interface Lit extends Expr{
+public abstract class Lit extends Expr{
 
-	TCon getType();
+	abstract TCon getType();
 	
-	default Type infer(Infer infer) {
+	public Type infer(Infer infer) {
 		return this.getType();
 	}
 }

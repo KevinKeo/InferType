@@ -4,7 +4,7 @@ import exception.UnboundVariableException;
 import inference.Infer;
 import type.Type;
 
-public class Var implements Expr{
+public class Var extends Expr{
 	private String name;
 	public Var(String name) {
 		this.name=name;

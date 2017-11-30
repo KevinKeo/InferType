@@ -8,7 +8,7 @@ import type.TArr;
 import type.TVar;
 import type.Type;
 
-public class Lam implements Expr{
+public class Lam extends Expr{
 	private Var name;
 	private Expr e;
 	

@@ -2,7 +2,7 @@ package expression;
 
 import type.TCon;
 
-public class LBool implements Lit {
+public class LBool extends Lit {
 	private boolean bool;
 
 	public LBool(boolean bool) {

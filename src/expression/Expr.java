@@ -1,9 +1,7 @@
 package expression;
 
-import inference.Infer;
-import type.Type;
+import inference.Inferable;
 
-public interface Expr {
+public abstract class Expr implements Inferable {
 	
-	Type infer(Infer infer);
 }

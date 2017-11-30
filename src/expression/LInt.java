@@ -2,7 +2,7 @@ package expression;
 
 import type.TCon;
 
-public class LInt implements Lit{
+public class LInt extends Lit{
 	private Integer value;
 
 	public LInt(int i) {

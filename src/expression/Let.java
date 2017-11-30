@@ -4,7 +4,7 @@ import inference.Infer;
 import type.Scheme;
 import type.Type;
 
-public class Let implements Expr {
+public class Let extends Expr {
 	private Var name;
 	private Expr e1, e2;
 
