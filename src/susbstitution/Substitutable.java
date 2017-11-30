@@ -76,8 +76,8 @@ public class Substitutable {
 
 	//-----------------[A]
 
-	/*public static <A> List<A> apply(Subst s, List<A> a){
-		return a.stream().map(m -> apply(s,m)).collect(Collectors.toList());
+	/*public static <A> List<A> runSolve(Subst s, List<A> a){
+		return a.stream().map(m -> runSolve(s,m)).collect(Collectors.toList());
 	}*/
 
 	//-----------------Constraint

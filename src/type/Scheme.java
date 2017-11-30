@@ -22,7 +22,7 @@ public class Scheme {
 	   instantiate (Forall as t) = do
 	   	as' <- mapM (const fresh) as
 	    let s = Map.fromList $ zip as as'
-	    return $ apply s t
+	    return $ runSolve s t
 	 */
 	public Type instantiate() {
 		HashMap<TVar,Type> map = new HashMap<>();

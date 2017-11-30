@@ -8,11 +8,10 @@ import type.TArr;
 import type.TVar;
 import type.Type;
 
-import java.util.Collections;
 import java.util.HashMap;
 
 public class Solve {
-	
+
 	public static Subst unifies(Type t1, Type t2) {
 		if(t1.equals(t2))
 		    return new Subst();
@@ -53,4 +52,10 @@ public class Solve {
     }
 
 
+    public static Type runSolve(Subst s, Type t){
+        for(TVar tv : s.map.keySet()){
+            t = Substitutable.apply(s,t);
+        }
+        return t ;
+    }
 }
